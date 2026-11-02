@@ -1,0 +1,57 @@
+import pandas as pd 
+from sklearn.datasets import fetch_california_housing 
+from sklearn.linear_model import LinearRegression 
+from sklearn.metrics import mean_squared_error 
+from sklearn.model_selection import train_test_split 
+import matplotlib.pyplot as plt 
+ 
+california=fetch_california_housing() 
+data=california.data 
+df=pd.DataFrame(data, columns=california.feature_names) 
+df['Price']=california.target 
+ 
+print(df) 
+ 
+X=df[['MedInc']] 
+Y=df['Price'] 
+ 
+print(X, Y) 
+ 
+X_train, X_test, Y_train, Y_test = train_test_split( 
+    X, Y, test_size=0.2, random_state=42 
+) 
+ 
+model = LinearRegression() 
+model.fit(X_train, Y_train) 
+ 
+Y_pred = model.predict(X_test) 
+print(Y_pred) 
+ 
+plt.figure(figsize=(8, 5)) 
+ 
+plt.scatter(X_train, Y_train, color='blue', label='Training Data') 
+ 
+plt.scatter(X_test, Y_test, color='green', label='Test Data') 
+ 
+plt.plot(X, model.predict(X), color='red', linewidth=2, label='Regression Line') 
+ 
+plt.title('Median Income vs House Price - Linear Regression') 
+plt.xlabel('Median Income') 
+plt.ylabel('House Price (in $100,000s)') 
+plt.legend() 
+plt.grid(True) 
+ 
+plt.show() 
+ 
+plt.figure(figsize=(8, 5)) 
+plt.scatter(X, Y, color='blue', alpha=0.7, label='Actual Data') 
+ 
+plt.plot(X, model.predict(X), color='red', linewidth=2, label='Regression Line') 
+ 
+plt.title('Median Income vs House Price Scatter Plot') 
+plt.xlabel('Median Income') 
+plt.ylabel('House Price (in $100,000s)') 
+plt.legend() 
+plt.grid(True) 
+ 
+plt.show()

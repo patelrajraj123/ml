@@ -1,0 +1,29 @@
+import numpy as np 
+ 
+x = np.array([2.0]) 
+w = np.array([2.3]) 
+b = -3.0 
+ 
+v = np.dot(w, x) + b 
+ 
+print(v) 
+ 
+def unitstep(v): 
+  return 1 if v>=0 else 0 
+ 
+unit_step=unitstep(v) 
+ 
+print(unit_step) 
+ 
+def linear(v): 
+  return v 
+ 
+lin=linear(v) 
+ 
+print(lin) 
+ 
+def sigmoid(v): 
+  return 1/(1+np.exp(-v)) 
+ 
+sig=sigmoid(v) 
+print(sig)

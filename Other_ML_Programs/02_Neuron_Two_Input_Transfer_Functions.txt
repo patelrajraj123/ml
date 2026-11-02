@@ -1,0 +1,34 @@
+import numpy as np 
+ 
+x = np.array([5, 6]) 
+w = np.array([3, 2]) 
+b = 1.2 
+ 
+v = np.dot(w, x) + b 
+ 
+print(v) 
+ 
+def sign_transfer(v): 
+    if v > 0: 
+        return 1 
+    elif v < 0: 
+        return -1 
+    else: 
+        return 0 
+ 
+sign = sign_transfer(v) 
+print(sign) 
+ 
+def linear(v): 
+    return v 
+ 
+lin = linear(v) 
+print(lin) 
+ 
+def tansig(v): 
+    numerator = np.exp(v) - np.exp(-v) 
+    denominator = np.exp(v) + np.exp(-v) 
+    return numerator / denominator 
+ 
+tan = tansig(v) 
+print(tan)

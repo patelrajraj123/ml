@@ -1,0 +1,53 @@
+import pandas as pd 
+import matplotlib.pyplot as plt 
+from sklearn.datasets import load_iris 
+from sklearn.preprocessing import StandardScaler 
+from sklearn.cluster import AgglomerativeClustering 
+from scipy.cluster.hierarchy import dendrogram, linkage 
+ 
+iris = load_iris() 
+X = iris.data 
+y = iris.target 
+df = pd.DataFrame(X, columns=iris.feature_names) 
+print(df.head()) 
+ 
+scaler = StandardScaler() 
+X_scaled = scaler.fit_transform(X) 
+ 
+plt.figure(figsize=(12, 6)) 
+linked = linkage(X_scaled, method='ward') 
+ 
+dendrogram( 
+    linked, 
+    orientation="top", 
+    distance_sort='descending', 
+    show_leaf_counts=True 
+) 
+ 
+hc = AgglomerativeClustering(n_clusters=3, metric='euclidean', linkage='ward') 
+clusters = hc.fit_predict(X_scaled) 
+ 
+df['Cluster'] = clusters 
+print(df.head()) 
+ 
+plt.figure(figsize=(8, 6)) 
+ 
+plt.scatter( 
+    X_scaled[:, 2], 
+    X_scaled[:, 3], 
+    c=clusters, 
+    cmap='rainbow', 
+    s=50 
+) 
+ 
+plt.title("Hierarchical Clustering of Iris Dataset") 
+plt.xlabel("petal length(scaled)") 
+plt.ylabel("Petal Width (scaled)") 
+plt.show() 
+ 
+comparison = pd.DataFrame({ 
+    'Actual class': y, 
+    'Predicted cluster': clusters 
+}) 
+ 
+print(comparison)
